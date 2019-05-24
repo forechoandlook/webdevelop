@@ -45,6 +45,7 @@ def article_titles(request, username=None):
 
 def article_detail(request, id, slug):
     article = get_object_or_404(ArticlePost, id=id, slug=slug)
+    
     total_views = r.incr("article:{}:views".format(article.id))
     r.zincrby('article_ranking', 1, article.id) # 有序集合
 
