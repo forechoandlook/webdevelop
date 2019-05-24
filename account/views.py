@@ -84,7 +84,7 @@ def myself_edit(request):
         user_form = UserForm(instance=request.user)
         userprofile_form = UserProfileForm(initial={"birth": userprofile.birth, "phone": userprofile.phone})
         userinfo_form = UserInfoForm(initial={"school": userinfo.school, "company": userinfo.company, "profession": userinfo.profession, "address": userinfo.address, "aboutme": userinfo.aboutme})
-        return render(request, "account/myself_edit.html", {"user_form": user_form, "userprofile_form": userprofile_form, "userinfo_form": userinfo_form})
+        return render(request, "account/myself_edit.html", {"user_form": user_form, "userprofile_form": userprofile_form, "userinfo_form": userinfo_form,"userinfo": userinfo})
 
 
 @login_required(login_url='/account/login')
