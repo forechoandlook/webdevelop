@@ -59,9 +59,9 @@
             <div style="margin-right:100px">
                 <!--img name="user_face" src="{% static 'images/newton.jpg' %}" class="img-circle" width="270px" id="my_photo"-->
                 {% if userinfo.photo %}
-                <img src="{{ userinfo.photo | striptags }}" class="img-circle" id="my_photo" name="user_face">
+                <img src=" /media/profile/{{userinfo.photo }}" class="img-circle" id="my_photo" name="user_face" width = "200px">
                 {% else %}
-                <img name="user_face" src="{% static 'images/avatar.png' %}" class="img-circle" id="my_photo">
+                <img name="user_face" src="{% static 'images/avatar.png' %}" class="img-circle" id="my_photo" width = "200px">
                 {% endif %}
             </div>
             <div style="margin-right:100px">
