@@ -1,0 +1,50 @@
+{% load staticfiles %}
+<div id="comments">
+    <!--问题是 如何设置-->
+    <!--展示评论模块-->
+    <h3><span class="glyphicon glyphicon-bullhorn"></span>本文有{{ comments.count }}评论</h3>
+ <!---->
+    {% for comment in article.comments.all %}
+	    <div>
+	        <p><strong>{{ comment.commentator }}</strong>说:</p>
+	        <p style="margin-left:40px;">{{ comment.body }}</p>
+	    </div>
+    {% empty %}
+    	<p>没有评论</p>
+    {% endfor %}
+<!---->
+    <!--进行评论模块-->
+    <h3><span class="glyphicon glyphicon-send"></span>看文章，发评论，不要沉默</h3>
+ {% if user.is_authenticated %}
+
+            <div class="col-sm-10">
+                {{ user.username}}
+            </div>
+            <label class="col-sm-2 control-label">评论</label>
+            <div class="col-sm-10" >
+                <textarea cols="40" id="comment_content" name="content" rows="10"></textarea>
+            </div>
+            <div class="col-sm-offset-2 col-sm-10">
+                <p  onclick="add_comment({{article.id}},'{{article.slug}}')"  class="btn btn-primary" >评论 </p>
+            </div>
+{% else %}
+    	<p>试一试吧 这里有一些问题  我知道每个人都是孤独的</p>
+{% endif %}
+
+</div>
+
+
+<script type="text/javascript">
+function add_comment(id,slug){
+    var content=$("#comment_content").val();
+    $.ajax({
+        url: "{% url 'article:add_comment' %}",
+        type: "POST",
+        data: {"article_id":id,"content":content,"article_slug":slug,},     
+        success:function(e){
+            $("#comments").html(e);
+        }
+    });
+    alert("4"); 
+}
+</script>

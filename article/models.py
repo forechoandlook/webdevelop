@@ -53,9 +53,12 @@ class ArticlePost(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(ArticlePost, on_delete=models.CASCADE, related_name="comments")
-    commentator = models.CharField(max_length=90)
+    commentator = models.ForeignKey(User, on_delete=models.CASCADE,related_name="articles_commentators", blank=True)
+    #commentator = models.CharField(max_length=90)
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
+    isreplaied = models.IntegerField(default=0)
+    like = models.ManyToManyField(User, related_name="comment_like", blank=True)
 
     class Meta:
         ordering = ('-created',)

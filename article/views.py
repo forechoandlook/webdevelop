@@ -175,3 +175,6 @@ def del_article_tag(request):
         return HttpResponse("1")
     except:
         return HttpResponse("2")
+
+
+

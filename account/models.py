@@ -22,7 +22,7 @@ class UserInfo(models.Model):
     profession = models.CharField(verbose_name='职业',max_length=100, blank=True)
     address = models.CharField(verbose_name='地址',max_length=100, blank=True)
     aboutme = models.TextField(verbose_name='详细内容',blank=True)
-    photo = models.ImageField(verbose_name='图片',blank=True)
+    photo = models.ImageField(verbose_name='图片',blank=True,upload_to="profile/")
 
     class Meta:
         db_table='用户信息'

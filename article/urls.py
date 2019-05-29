@@ -18,4 +18,13 @@ urlpatterns = [
     path('like-article/', list_views.like_article, name="like_article"),
     path('article-tag/', views.article_tag, name="article_tag"),
     path('del-article-tag/', views.del_article_tag, name="del_article_tag"),
+    path('comments/',list_views.comments,name="comments"),
+    path('add_comment/',list_views.add_comment,name="add_comment"),
+    # 回复评论
+    path('replay-comment',list_views.replay_comment,name="replay_comment"),
+    # 点赞评论
+    path('like-comment/',list_views.like_comment,name="like_comment"),
+    # 删除评论
+    path('del-commet/',list_views.del_comment,name="del_comment"),
+
 ]
