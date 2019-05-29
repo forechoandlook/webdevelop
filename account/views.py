@@ -5,6 +5,8 @@ from .forms import LoginForm, RegistrationForm, UserProfileForm, UserInfoForm, U
 from django.contrib.auth.decorators import login_required
 from .models import UserProfile, UserInfo
 from django.contrib.auth.models import User
+import base64
+from django.conf import settings
 
 
 def user_login(request):
@@ -91,9 +93,16 @@ def myself_edit(request):
 def my_image(request):
     if request.method == 'POST':
         img = request.POST['img']
+        imgdate = base64.b64decode(img.replace("data:image/png;base64,",""))
         userinfo = UserInfo.objects.get(user=request.user.id)
-        userinfo.photo = img
+        name = str(userinfo.id)+".png"
+        fname = settings.MEDIA_ROOT+"/profile/"+name
+        with open(fname,"wb") as pic:
+            pic.write(imgdate)
+        userinfo.photo = name
+        print(userinfo.photo)
         userinfo.save()
+        print(userinfo.photo)
         return HttpResponse("1")
     else:
         return render(request, 'account/imagecrop.html', )
