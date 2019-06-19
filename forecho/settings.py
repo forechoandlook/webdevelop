@@ -13,7 +13,7 @@ SECRET_KEY = 'cq_*2na=4igzi$0q1g=a1moca_ict*y+15wv_--ca=!ianjc@='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.130",]
 
 # Application definition
 

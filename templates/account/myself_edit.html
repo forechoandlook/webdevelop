@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}my information{% endblock %}
+{% block title %}编辑信息{% endblock %}
 {% block content %}
 <div class="row text-center vertical-middle-sm">
-    <h1>Edit My Information</h1>
+    <h1>编辑我的信息</h1>
     <div class="row">
         <div class="col-md-6">
             <form class="form-horizontal" action="." method="post">{% csrf_token %}
@@ -62,7 +62,7 @@
             <div style="margin-right:100px">
                 <!--img name="user_face" src="{% static 'images/newton.jpg' %}" class="img-circle" width="270px" id="my_photo"-->
                 {% if userinfo.photo %}
-                <img src="{{ userinfo.photo | striptags }}" class="img-circle" width="200px" id="my_photo" name="user_face">
+                <img src=" /media/profile/{{userinfo.photo }}" class="img-circle" width="200px" id="my_photo" name="user_face">
                 {% else %}
                 <img name="user_face" src="{% static 'images/avatar.png' %}" width="200px" class="img-circle" id="my_photo">
                 {% endif %}

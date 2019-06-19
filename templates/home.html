@@ -1,11 +1,186 @@
-{% extends "base.html" %}
-{% block title %} Home page {% endblock %}
+{% extends "base1.html" %}
+{% block title %} 主页 {% endblock %}
 {% block content %}
-<div class="text-center">
-    <h1>WELCOM YOU</h1>
-    <h3>Life is short. You need Python</h3>
-    <h2>Django makes it easier to build better Web apps more quickly and with less code.</h2>
-    {% load staticfiles %}
-    <img src="{% static 'images/lehehe.png' %}" width="400px">
-</div>
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/main.css' %}"/>
+<div id="main"></div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=wvGuSDMA4xjj0t1dPqEtibPvXY5gyN4U"></script>
+<!-- ECharts单文件引入 -->
+<script src="{% static 'js/echarts.js'%}"></script>
+<script src="{% static 'js/chinaMap.js'%}"></script>
+<script src="{% static 'js/BmapLib.js'%}"></script>
+<script src="{% static 'js/data.js'%}"></script>
+<script type="text/javascript">
+
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+    require(
+        [
+            'echarts',
+            'echarts/chart/map'
+        ],
+        function (ec) {
+            var myChart = ec.init(document.getElementById('main'));
+            option = {
+                backgroundColor: '#000',
+                color: [
+                    'rgba(255, 255, 255, 0.8)',
+                    'rgba(14, 241, 242, 0.8)',
+                    'rgba(37, 140, 249, 0.8)'
+                ],
+                title: {
+                    text: '最高访客量',
+                    subtext: '历史最高访客量：230987643',
+                    x: 'center',
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+                legend: {
+                    orient: 'vertical',
+                    x: 'left',
+                    data: ['强', '中', '弱'],
+                    textStyle: {
+                        color: '#fff'
+                    }
+                },
+                toolbox: {
+                    show: false
+                },
+                series: [
+                    {
+                        name: '弱',
+                        type: 'map',
+                        mapType: 'china',
+                        itemStyle: {
+                            normal: {
+                                borderColor: 'rgba(100,149,237,1)',
+                                borderWidth: 1.5,
+                                areaStyle: {
+                                    color: '#1b1b1b'
+                                }
+                            }
+                        },
+                        data: [],
+                        markPoint: {
+                            symbolSize: 2,
+                            large: true,
+                            effect: {
+                                show: true
+                            },
+                            data: (function () {
+                                var data = [];
+                                var len = 3000;
+                                var geoCoord
+                                while (len--) {
+                                    geoCoord = placeList[len % placeList.length].geoCoord;
+                                    var x = geoCoord[0] + Math.random() * 1 - 0.5;
+                                    var y = geoCoord[1] + Math.random() * 2 - 0;
+                                    if (ptInPolygon(x, y)) {
+                                        data.push({
+                                            name: placeList[len % placeList.length].name + len,
+                                            value: 50,
+                                            geoCoord: [
+                                                x,
+                                                y
+                                            ]
+                                        })
+                                    }
+                                }
+                                return data;
+                            })()
+                        }
+                    },
+                    {
+                        name: '中',
+                        type: 'map',
+                        mapType: 'china',
+                        data: [],
+                        markPoint: {
+                            symbolSize: 3,
+                            large: true,
+                            effect: {
+                                show: true
+                            },
+                            data: (function () {
+                                var data = [];
+                                var len = 1000;
+                                var geoCoord
+                                while (len--) {
+                                    geoCoord = placeList[len % placeList.length].geoCoord;
+                                    var x = geoCoord[0] + Math.random() * 5 - 2.5;
+                                    var y = geoCoord[1] + Math.random() * 3 - 1.5;
+                                    if (ptInPolygon(x, y)) {
+                                        data.push({
+                                            name: placeList[len % placeList.length].name + len,
+                                            value: 50,
+                                            geoCoord: [
+                                                x,
+                                                y
+                                            ]
+                                        })
+                                    }
+                                }
+                                return data;
+                            })()
+                        }
+                    },
+                    {
+                        name: '强',
+                        type: 'map',
+                        mapType: 'china',
+                        hoverable: false,
+                        roam: true,
+                        data: [],
+                        markPoint: {
+                            symbol: 'diamond',
+                            symbolSize: 6,
+                            large: true,
+                            effect: {
+                                show: true
+                            },
+                            data: (function () {
+                                var data = [];
+                                var len = placeList.length;
+                                while (len--) {
+                                    data.push({
+                                        name: placeList[len].name,
+                                        value: 90,
+                                        geoCoord: placeList[len].geoCoord
+                                    })
+                                }
+                                return data;
+                            })()
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
+    );
+
+    //判断点在多边形内还是外
+    function ptInPolygon(lng, lat) {
+        var pts = CreateChinaMapLine();
+
+        var ply = new BMap.Polygon(pts);
+
+        var pt = new BMap.Point(lng, lat);
+
+        var result = BMapLib.GeoUtils.isPointInPolygon(pt, ply);
+
+        if (result == true) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+</script>
+
+
 {% endblock %}

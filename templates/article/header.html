@@ -1,8 +1,8 @@
 {% load staticfiles %}
-<div class="container">
+<div>
     <nav class="navbar navbar-default" role="navigation">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="{% static '/images/logo.png' %}" width="100px"></a>
+            <a  href="#"><img src="{% static '/images/logo.png' %}"  height="50px"></a>
         </div>
         <div>
             <ul class="nav navbar-nav" role="tablist">
@@ -12,7 +12,7 @@
             <ul class="nav navbar-nav navbar-right" style="margin-right:10px">
                 <li><a href="{% url 'blog:blog_list' %}">网站首页</a></li>
                 <li><a href="#" style="text-color:red">{{ user.username }}</a></li>
-                <li><a href="{% url 'account:user_logout' %}">Logout</a></li>
+                <li><a href="{% url 'account:user_logout' %}">登出</a></li>
             </ul>
         </div>
     </nav>
