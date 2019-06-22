@@ -13,7 +13,7 @@ SECRET_KEY = 'cq_*2na=4igzi$0q1g=a1moca_ict*y+15wv_--ca=!ianjc@='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.130",]
+ALLOWED_HOSTS = ["192.168.1.130","127.0.0.1"]
 
 # Application definition
 
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'article',
     'image',
     'sorl.thumbnail',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,23 @@ REDIS_DB = 0
 # 图片保存地址配置
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+
+#搜索设置
+# Haystack试图整合自定义搜索 它值依赖与自身的代码，并只专注于搜索 是一个可插拔的后端（很像Django的数据库层）
+# 
+HAYSTACK_CONNECTIONS = {
+    'default':{
+    # add whoosh engine
+        'ENGINE':'haystack.backends.whoosh_cn_backend.WhooshEngine',
+    # add file path
+        'PATH':os.path.join(BASE_DIR,"whoosh_index"),
+    }
+}
+
+# add modification amend alter revamp recompose delete 
+# auto make indexes
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SEARCH_RESULT_PER_PAGE = 8

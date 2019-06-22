@@ -24,9 +24,9 @@
     <div class="col-md-4">
         <div>
             {% if userinfo.photo %}
-            <img src="{{ userinfo.photo | striptags }}" class="img-circle" id="my_photo" name="user_face" style="width: 300px">
+            <img src="/media/profile/{{userinfo.photo }}" class="img-circle" id="my_photo" name="user_face" style="width: 100px">
             {% else %}
-            <img name="user_face" src="{% static 'images/newton.jpg' %}" class="img-circle" id="my_photo" style="width: 300px">
+            <img name="user_face" src="{% static 'images/avatar.png' %}" class="img-circle" id="my_photo" style="width: 100px">
             {% endif %}
         </div>
         <div>
